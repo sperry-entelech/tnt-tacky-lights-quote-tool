@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNT Limousine - Richmond Tacky Lights Tour Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            height: 100px;
+            width: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #C41E3A;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(196, 30, 58, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .season-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #C41E3A, #8B1528);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #C41E3A;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #EF4444;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        label .required {
+            color: #C41E3A;
+            font-size: 18px;
+        }
+
+        input, select, textarea {
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #C41E3A;
+            box-shadow: 0 0 20px rgba(196, 30, 58, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: white;
+            padding: 10px;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .autocomplete-suggestions {
+            position: absolute;
+            background: rgba(26, 26, 46, 0.98);
+            border: 2px solid rgba(196, 30, 58, 0.4);
+            border-radius: 12px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .autocomplete-suggestions.show {
+            display: block;
+        }
+
+        .autocomplete-suggestion {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+
+        .autocomplete-suggestion:hover {
+            background: rgba(196, 30, 58, 0.2);
+        }
+
+        .autocomplete-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-main {
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+        }
+
+        .suggestion-detail {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 3px;
+        }
+
+        .vehicle-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vehicle-card:hover {
+            border-color: rgba(196, 30, 58, 0.6);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .vehicle-card.selected {
+            border-color: #C41E3A;
+            background: rgba(196, 30, 58, 0.15);
+        }
+
+        .vehicle-card.recommended {
+            border-color: #4CAF50;
+            position: relative;
+        }
+
+        .vehicle-card.recommended::after {
+            content: "RECOMMENDED";
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #4CAF50;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .vehicle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .vehicle-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #C41E3A;
+        }
+
+        .vehicle-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .vehicle-details {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .price-display {
+            background: linear-gradient(135deg, rgba(196, 30, 58, 0.2) 0%, rgba(139, 21, 40, 0.2) 100%);
+            border: 2px solid #C41E3A;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+            margin-bottom: 15px;
+        }
+
+        .price-breakdown {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 15px;
+        }
+
+        .price-breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #C41E3A 0%, #8B1528 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(196, 30, 58, 0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 2px solid #C41E3A;
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            animation: popupSlide 0.3s ease-out;
+        }
+
+        @keyframes popupSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup-close:hover {
+            background: #C41E3A;
+        }
+
+        .popup-title {
+            font-size: 1.8rem;
+            color: #C41E3A;
+            margin-bottom: 20px;
+        }
+
+        .popup-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .popup-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .popup-link {
+            background: rgba(196, 30, 58, 0.15);
+            border: 1px solid #C41E3A;
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .popup-link:hover {
+            background: rgba(196, 30, 58, 0.3);
+            transform: translateX(5px);
+        }
+
+        .help-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #C41E3A, #8B1528);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(196, 30, 58, 0.5);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .help-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(196, 30, 58, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 25px;
+            }
+
+            .price-amount {
+                font-size: 2.5rem;
+            }
+
+            .help-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        .info-box {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #FFC107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Help Button -->
+    <button class="help-btn" onclick="showHelpPopup()">Need Help Planning? 🎄</button>
+
+    <!-- Popup Overlay -->
+    <div class="popup-overlay" id="helpPopup">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+            <h2 class="popup-title">Free Tacky Lights Resources</h2>
+            <p class="popup-text">Not sure which tour to choose? Download our free guides!</p>
+            <div class="popup-links">
+                <a href="#" class="popup-link" target="_blank">
+                    📍 Driver's Insider Guide - All 61 Locations
+                </a>
+                <a href="#" class="popup-link" target="_blank">
+                    ✅ Printable Tour Checklist
+                </a>
+                <a href="#" class="popup-link" target="_blank">
+                    🗺️ Interactive Map with Routes
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <img src="assets/tnt-logo.png" alt="TNT Limousine" class="logo">
+            <h1>Richmond Tacky Lights Tours</h1>
+            <p class="subtitle">Experience Richmond's Famous Holiday Lights in Luxury</p>
+            <span class="season-badge">🎄 Now Booking: Thanksgiving through New Year's Eve</span>
+        </div>
+
+        <form id="bookingForm">
+            <!-- Customer Information -->
+            <div class="form-section">
+                <h3 class="section-title">Your Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name <span class="required">*</span></label>
+                        <input type="text" id="firstName" name="firstName" required placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name <span class="required">*</span></label>
+                        <input type="text" id="lastName" name="lastName" required placeholder="Smith">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" required placeholder="(804) 555-1234">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="pickupAddress">Pickup Location <span class="required">*</span></label>
+                        <input type="text" id="pickupAddress" name="pickupAddress" required placeholder="Start typing your address...">
+                        <div id="pickupSuggestions" class="autocomplete-suggestions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tour Details -->
+            <div class="form-section">
+                <h3 class="section-title">Tour Details</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tourDate">Preferred Date <span class="required">*</span></label>
+                        <input type="date" id="tourDate" name="tourDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tourTime">Preferred Start Time <span class="required">*</span></label>
+                        <select id="tourTime" name="tourTime" required>
+                            <option value="">Select a time...</option>
+                            <option value="17:30">5:30 PM</option>
+                            <option value="18:00">6:00 PM (Most Popular)</option>
+                            <option value="18:30">6:30 PM</option>
+                            <option value="19:00">7:00 PM</option>
+                            <option value="19:30">7:30 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="groupSize">Number of Passengers <span class="required">*</span></label>
+                        <select id="groupSize" name="groupSize" required onchange="updateVehicleRecommendations()">
+                            <option value="">Select group size...</option>
+                            <option value="1">1 Passenger</option>
+                            <option value="2">2 Passengers</option>
+                            <option value="3">3 Passengers</option>
+                            <option value="4">4 Passengers</option>
+                            <option value="5">5 Passengers</option>
+                            <option value="6">6 Passengers</option>
+                            <option value="7">7 Passengers</option>
+                            <option value="8">8 Passengers</option>
+                            <option value="9">9 Passengers</option>
+                            <option value="10">10 Passengers</option>
+                            <option value="11">11 Passengers</option>
+                            <option value="12">12 Passengers</option>
+                            <option value="13">13-18 Passengers</option>
+                            <option value="19">19+ Passengers (Call for custom quote)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="info-box" id="groupSizeInfo" style="display:none;">
+                    <strong>Great choice!</strong> <span id="infoText"></span>
+                </div>
+            </div>
+
+            <!-- Vehicle Selection -->
+            <div class="form-section">
+                <h3 class="section-title">Choose Your Vehicle</h3>
+                <div id="vehicleSelection">
+                    <!-- Vehicle cards will be dynamically generated -->
+                </div>
+            </div>
+
+            <!-- Special Requests -->
+            <div class="form-section">
+                <h3 class="section-title">Additional Information</h3>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="specialRequests">Special Requests (Optional)</label>
+                        <textarea id="specialRequests" name="specialRequests" placeholder="Any special requests? (champagne, decorations, route preferences, etc.)"></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="hearAboutUs">How did you hear about us?</label>
+                        <select id="hearAboutUs" name="hearAboutUs">
+                            <option value="">Select...</option>
+                            <option value="website">TNT Website</option>
+                            <option value="landing-page">Tacky Lights Landing Page</option>
+                            <option value="google">Google Search</option>
+                            <option value="social">Social Media</option>
+                            <option value="referral">Friend/Family Referral</option>
+                            <option value="repeat">Repeat Customer</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Display -->
+            <div class="price-display" id="priceDisplay" style="display:none;">
+                <p class="price-label">Your Estimated Quote</p>
+                <div class="price-amount" id="priceAmount">$0.00</div>
+                <div class="price-breakdown" id="priceBreakdown"></div>
+                <p style="font-size: 13px; opacity: 0.7; margin-top: 15px;">
+                    * Price includes 3-hour tour, professional chauffeur, gratuity, and fuel. Additional hours available at hourly rate.
+                </p>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                Get Instant Quote & Book Your Tour
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // Pricing Data for Tacky Lights Tours (3-hour base)
+        const vehiclePricing = {
+            'lincoln-aviator': {
+                name: 'Lincoln Aviator',
+                passengers: 3,
+                available: 3,
+                weekdayPrice: 300,
+                weekendPrice: 375,
+                hourlyRate: 100
+            },
+            'lincoln-mkt': {
+                name: 'Lincoln MKT',
+                passengers: 3,
+                available: 1,
+                weekdayPrice: 300,
+                weekendPrice: 375,
+                hourlyRate: 100
+            },
+            'ford-transit': {
+                name: 'Ford Transit',
+                passengers: 11,
+                available: 1,
+                weekdayPrice: 579,
+                weekendPrice: 729,
+                hourlyRate: 140
+            },
+            'suburban': {
+                name: 'Suburban',
+                passengers: 6,
+                available: 1,
+                weekdayPrice: 465,
+                weekendPrice: 589,
+                hourlyRate: 155
+            },
+            'exec-promaster': {
+                name: 'Executive Pro-Master',
+                passengers: 6,
+                available: 1,
+                weekdayPrice: 474,
+                weekendPrice: 599,
+                hourlyRate: 158
+            },
+            'stretch-limo': {
+                name: 'Stretch Limo',
+                passengers: 8,
+                available: 1,
+                weekdayPrice: 499,
+                weekendPrice: 649,
+                hourlyRate: 158
+            },
+            'sprinter-limo': {
+                name: 'Sprinter Limo',
+                passengers: 10,
+                available: 1,
+                weekdayPrice: 534,
+                weekendPrice: 669,
+                hourlyRate: 178
+            },
+            'mini-bus-passenger': {
+                name: 'Mini Bus Passenger (Turtle Top)',
+                passengers: 10,
+                available: 1,
+                weekdayPrice: 534,
+                weekendPrice: 669,
+                hourlyRate: 178
+            },
+            'mini-bus-executive': {
+                name: 'Mini Bus Executive (Turtle Top)',
+                passengers: 12,
+                available: 1,
+                weekdayPrice: 649,
+                weekendPrice: 829,
+                hourlyRate: 162
+            },
+            'limo-bus': {
+                name: 'Limo Bus',
+                passengers: 18,
+                available: 1,
+                weekdayPrice: 749,
+                weekendPrice: 939,
+                hourlyRate: 240
+            }
+        };
+
+        let selectedVehicle = null;
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('tourDate').min = today;
+
+            // Set maximum date to Dec 31
+            const currentYear = new Date().getFullYear();
+            document.getElementById('tourDate').max = `${currentYear}-12-31`;
+
+            // Enable submit button when form is valid
+            const form = document.getElementById('bookingForm');
+            form.addEventListener('change', validateForm);
+            form.addEventListener('input', validateForm);
+
+            // Form submission
+            form.addEventListener('submit', handleSubmit);
+
+            // Phone number formatting
+            document.getElementById('phone').addEventListener('input', formatPhone);
+
+            // Tour date change - update pricing
+            document.getElementById('tourDate').addEventListener('change', calculatePrice);
+        });
+
+        function updateVehicleRecommendations() {
+            const groupSize = parseInt(document.getElementById('groupSize').value);
+            if (!groupSize || groupSize === 19) {
+                document.getElementById('vehicleSelection').innerHTML = '<p style="opacity: 0.7;">Please select a group size to see available vehicles.</p>';
+                document.getElementById('groupSizeInfo').style.display = 'none';
+                return;
+            }
+
+            // Show info message based on group size
+            const infoBox = document.getElementById('groupSizeInfo');
+            const infoText = document.getElementById('infoText');
+
+            if (groupSize <= 3) {
+                infoText.textContent = 'Perfect for an intimate, romantic tour! We recommend our luxury sedans.';
+            } else if (groupSize <= 8) {
+                infoText.textContent = 'Great for families and small groups! Check out our SUVs and limousines.';
+            } else if (groupSize <= 12) {
+                infoText.textContent = 'Ideal group size for our spacious mini buses!';
+            } else {
+                infoText.textContent = 'Large group? Our Limo Bus is perfect for the ultimate party experience!';
+            }
+            infoBox.style.display = 'block';
+
+            // Generate vehicle cards
+            let vehicleHTML = '';
+            Object.keys(vehiclePricing).forEach(key => {
+                const vehicle = vehiclePricing[key];
+                const isRecommended = groupSize <= vehicle.passengers &&
+                                     (!selectedVehicle || vehicle.passengers <= vehiclePricing[selectedVehicle]?.passengers);
+
+                if (groupSize <= vehicle.passengers) {
+                    vehicleHTML += `
+                        <div class="vehicle-card ${isRecommended ? 'recommended' : ''}" onclick="selectVehicle('${key}')">
+                            <div class="vehicle-header">
+                                <div class="vehicle-name">${vehicle.name}</div>
+                                <div class="vehicle-price" id="price-${key}">Select date</div>
+                            </div>
+                            <div class="vehicle-details">
+                                <span>👥 Up to ${vehicle.passengers} passengers</span>
+                                <span>🚗 ${vehicle.available} available</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('vehicleSelection').innerHTML = vehicleHTML || '<p style="opacity: 0.7;">Please contact us for larger groups.</p>';
+
+            // Update prices if date is selected
+            calculatePrice();
+        }
+
+        function selectVehicle(vehicleKey) {
+            selectedVehicle = vehicleKey;
+
+            // Update visual selection
+            document.querySelectorAll('.vehicle-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+
+            // Calculate and show price
+            calculatePrice();
+            validateForm();
+        }
+
+        function calculatePrice() {
+            if (!selectedVehicle) return;
+
+            const tourDate = document.getElementById('tourDate').value;
+            if (!tourDate) return;
+
+            const date = new Date(tourDate + 'T00:00:00');
+            const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
+
+            // Friday (5) and Saturday (6) are weekend pricing
+            const isWeekend = dayOfWeek === 5 || dayOfWeek === 6;
+
+            const vehicle = vehiclePricing[selectedVehicle];
+            const basePrice = isWeekend ? vehicle.weekendPrice : vehicle.weekdayPrice;
+
+            // Update price display
+            document.getElementById('priceAmount').textContent = `$${basePrice.toFixed(2)}`;
+
+            // Show breakdown
+            const breakdown = `
+                <div class="price-breakdown-item">
+                    <span>${vehicle.name} - 3 Hour Tour</span>
+                    <span>$${basePrice.toFixed(2)}</span>
+                </div>
+                <div class="price-breakdown-item">
+                    <span>Day Type</span>
+                    <span>${isWeekend ? 'Weekend' : 'Weekday'}</span>
+                </div>
+                <div class="price-breakdown-item">
+                    <span>Additional Hours</span>
+                    <span>$${vehicle.hourlyRate}/hr</span>
+                </div>
+            `;
+
+            document.getElementById('priceBreakdown').innerHTML = breakdown;
+            document.getElementById('priceDisplay').style.display = 'block';
+
+            // Update vehicle card prices
+            Object.keys(vehiclePricing).forEach(key => {
+                const v = vehiclePricing[key];
+                const price = isWeekend ? v.weekendPrice : v.weekdayPrice;
+                const priceEl = document.getElementById(`price-${key}`);
+                if (priceEl) {
+                    priceEl.textContent = `$${price}`;
+                }
+            });
+        }
+
+        function validateForm() {
+            const form = document.getElementById('bookingForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            const isValid = form.checkValidity() && selectedVehicle !== null;
+            submitBtn.disabled = !isValid;
+        }
+
+        function formatPhone(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) value = value.slice(0, 10);
+
+            if (value.length >= 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
+            } else if (value.length >= 3) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+            }
+
+            e.target.value = value;
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                pickupAddress: document.getElementById('pickupAddress').value,
+                tourDate: document.getElementById('tourDate').value,
+                tourTime: document.getElementById('tourTime').value,
+                groupSize: parseInt(document.getElementById('groupSize').value),
+                vehicleType: vehiclePricing[selectedVehicle].name,
+                vehicleKey: selectedVehicle,
+                specialRequests: document.getElementById('specialRequests').value,
+                hearAboutUs: document.getElementById('hearAboutUs').value,
+                priceQuoted: parseFloat(document.getElementById('priceAmount').textContent.replace('$', '')),
+                timestamp: new Date().toISOString(),
+                leadSource: 'Tacky Lights Booking Tool'
+            };
+
+            try {
+                const response = await fetch('/api/submit-booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    window.location.href = `success.html?ref=${result.bookingRef}`;
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                alert('There was an error submitting your request. Please call us at (804) 972-4550.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Get Instant Quote & Book Your Tour';
+            }
+        }
+
+        // Popup functions
+        function showHelpPopup() {
+            document.getElementById('helpPopup').classList.add('show');
+        }
+
+        function closePopup() {
+            document.getElementById('helpPopup').classList.remove('show');
+        }
+
+        // Exit intent popup
+        let exitIntentShown = false;
+        document.addEventListener('mouseleave', function(e) {
+            if (e.clientY < 10 && !exitIntentShown) {
+                exitIntentShown = true;
+                showHelpPopup();
+            }
+        });
+    </script>
+</body>
+</html>
